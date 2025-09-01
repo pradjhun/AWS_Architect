@@ -1,6 +1,6 @@
-import jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import { CostBreakdown } from './awsPricing';
-import { ArchitectureAnalysisResult } from './openai';
+import { ArchitectureAnalysisResult } from './bedrock';
 
 export class DocumentGenerator {
   private addHeader(doc: jsPDF, title: string) {
