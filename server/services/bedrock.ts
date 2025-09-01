@@ -113,11 +113,19 @@ export async function analyzeArchitectureDiagram(base64Image: string): Promise<A
   }
 }
 
+async function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export async function generateDocumentContent(
   analysisResult: ArchitectureAnalysisResult,
   costBreakdown: any,
-  documentType: 'pricing' | 'solution' | 'deployment' | 'monitoring'
+  documentType: 'pricing' | 'solution' | 'deployment' | 'monitoring',
+  retryCount = 0
 ): Promise<string> {
+  const maxRetries = 3;
+  const baseDelay = 2000; // 2 seconds
+  
   try {
     const prompts = {
       pricing: `Generate a comprehensive AWS pricing document based on the identified services and cost breakdown. Include:
@@ -186,7 +194,21 @@ export async function generateDocumentContent(
     return responseBody.content[0].text || "";
 
   } catch (error) {
-    console.error(`Error generating ${documentType} document:`, error);
+    console.error(`Error generating ${documentType} document (attempt ${retryCount + 1}):`, error);
+    
+    // Check if it's a throttling error and we haven't exceeded max retries
+    const errorMessage = (error as Error).message;
+    const isThrottlingError = errorMessage.includes('ThrottlingException') || 
+                             errorMessage.includes('Too many requests') ||
+                             errorMessage.includes('429');
+    
+    if (isThrottlingError && retryCount < maxRetries) {
+      const delay = baseDelay * Math.pow(2, retryCount); // Exponential backoff
+      console.log(`Throttling detected, waiting ${delay}ms before retry ${retryCount + 1}/${maxRetries}`);
+      await sleep(delay);
+      return generateDocumentContent(analysisResult, costBreakdown, documentType, retryCount + 1);
+    }
+    
     throw new Error(`Failed to generate ${documentType} document: ` + (error as Error).message);
   }
 }

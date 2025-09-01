@@ -191,8 +191,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const documents = [];
 
-      for (const docType of documentTypes) {
+      for (let i = 0; i < documentTypes.length; i++) {
+        const docType = documentTypes[i];
+        
         try {
+          // Add delay between API calls to avoid rate limiting
+          if (i > 0) {
+            await new Promise(resolve => setTimeout(resolve, 2000)); // 2 second delay
+          }
+          
           let documentBuffer: Buffer;
           
           switch (docType) {
@@ -244,11 +251,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
           documents.push(document);
         } catch (error) {
           console.error(`Error generating ${docType} document:`, error);
+          
+          // Check if it's a rate limit error and provide better error handling
+          const errorMessage = (error as Error).message;
+          const status = errorMessage.includes('Too many requests') || errorMessage.includes('ThrottlingException') 
+            ? "rate_limited" 
+            : "failed";
+          
           await storage.createGeneratedDocument({
             analysisId,
             documentType: docType,
             filePath: "",
-            status: "failed"
+            status
           });
         }
       }
