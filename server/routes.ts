@@ -197,25 +197,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           switch (docType) {
             case 'pricing':
-              documentBuffer = documentGenerator.generatePricingDocument(
+              documentBuffer = await documentGenerator.generatePricingDocument(
                 analysis.analysisResult as any,
                 analysis.estimatedCost as any,
                 'us-east-1'
               );
               break;
             case 'solution':
-              documentBuffer = documentGenerator.generateSolutionDocument(
+              documentBuffer = await documentGenerator.generateSolutionDocument(
                 analysis.analysisResult as any
               );
               break;
             case 'deployment':
-              documentBuffer = documentGenerator.generateDeploymentDocument(
+              documentBuffer = await documentGenerator.generateDeploymentDocument(
                 analysis.analysisResult as any,
                 'us-east-1'
               );
               break;
             case 'monitoring':
-              documentBuffer = documentGenerator.generateMonitoringDocument(
+              documentBuffer = await documentGenerator.generateMonitoringDocument(
                 analysis.analysisResult as any
               );
               break;
