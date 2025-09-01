@@ -55,7 +55,7 @@ export async function analyzeArchitectureDiagram(base64Image: string): Promise<A
     Analyze this AWS architecture diagram and identify all services, their configurations, and provide optimization recommendations.`;
 
     const command = new InvokeModelCommand({
-      modelId: "anthropic.claude-3-5-sonnet-20241022-v2:0",
+      modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
       body: JSON.stringify({
         anthropic_version: "bedrock-2023-05-31",
         max_tokens: 2000,
@@ -165,7 +165,7 @@ export async function generateDocumentContent(
     Cost Breakdown: ${JSON.stringify(costBreakdown, null, 2)}`;
 
     const command = new InvokeModelCommand({
-      modelId: "anthropic.claude-3-5-sonnet-20241022-v2:0",
+      modelId: "anthropic.claude-3-5-sonnet-20240620-v1:0",
       body: JSON.stringify({
         anthropic_version: "bedrock-2023-05-31",
         max_tokens: 4000,
