@@ -1,24 +1,24 @@
-import { ArchitectureAnalysisResult } from './openai';
+import { ArchitectureAnalysisResult } from './bedrock';
 
 // AWS pricing data (simplified - in production, use AWS Pricing API)
 const AWS_PRICING = {
   'EC2': {
-    't3.micro': { hourly: 0.0104, monthly: 7.5 },
-    't3.small': { hourly: 0.0208, monthly: 15.0 },
-    't3.medium': { hourly: 0.0416, monthly: 30.0 },
-    't3.large': { hourly: 0.0832, monthly: 60.0 },
-    't3.xlarge': { hourly: 0.1664, monthly: 120.0 },
-    'm5.large': { hourly: 0.096, monthly: 69.12 },
-    'm5.xlarge': { hourly: 0.192, monthly: 138.24 },
-    'c5.large': { hourly: 0.085, monthly: 61.20 },
-    'r5.large': { hourly: 0.126, monthly: 90.72 }
+    't3.micro': { hourly: 0.0104, monthly: 7.50 },
+    't3.small': { hourly: 0.0208, monthly: 15.18 },
+    't3.medium': { hourly: 0.0416, monthly: 30.37 },
+    't3.large': { hourly: 0.0832, monthly: 60.74 },
+    't3.xlarge': { hourly: 0.1664, monthly: 121.49 },
+    'm5.large': { hourly: 0.096, monthly: 70.08 },
+    'm5.xlarge': { hourly: 0.192, monthly: 140.16 },
+    'c5.large': { hourly: 0.085, monthly: 62.05 },
+    'r5.large': { hourly: 0.126, monthly: 91.98 }
   },
   'RDS': {
-    'db.t3.micro': { hourly: 0.017, monthly: 12.24 },
-    'db.t3.small': { hourly: 0.034, monthly: 24.48 },
-    'db.t3.medium': { hourly: 0.068, monthly: 48.96 },
-    'db.m5.large': { hourly: 0.192, monthly: 138.24 },
-    'db.r5.large': { hourly: 0.240, monthly: 172.80 }
+    'db.t3.micro': { hourly: 0.017, monthly: 12.41 },
+    'db.t3.small': { hourly: 0.034, monthly: 24.82 },
+    'db.t3.medium': { hourly: 0.068, monthly: 49.64 },
+    'db.m5.large': { hourly: 0.192, monthly: 140.16 },
+    'db.r5.large': { hourly: 0.240, monthly: 175.20 }
   },
   'S3': {
     'standard': { per_gb: 0.023 }, // per GB/month
@@ -26,13 +26,18 @@ const AWS_PRICING = {
     'glacier': { per_gb: 0.004 }
   },
   'CloudFront': {
-    'data_transfer': { per_gb: 0.085 }, // first 10TB per month
-    'requests': { per_10k: 0.0075 }
+    'monthly_base': 0,
+    'data_transfer_per_gb': 0.085, // first 10TB per month
+    'requests_per_10k': 0.0075
   },
   'ALB': {
     'hourly': 0.0225,
     'monthly': 16.20,
     'lcu_hourly': 0.008 // Load Balancer Capacity Unit
+  },
+  'WAF': {
+    'monthly_base': 5.00,
+    'per_million_requests': 1.00
   },
   'NAT_Gateway': {
     'hourly': 0.045,
@@ -43,6 +48,26 @@ const AWS_PRICING = {
     'gp3': { per_gb: 0.08 }, // per GB/month
     'gp2': { per_gb: 0.10 },
     'io1': { per_gb: 0.125 }
+  },
+  'CloudWatch': {
+    'basic_monitoring': 3.50,
+    'detailed_monitoring_per_metric': 0.30
+  },
+  'CloudTrail': {
+    'management_events': 2.00,
+    'data_events_per_100k': 0.10
+  },
+  'SNS': {
+    'per_1000_notifications': 0.50
+  },
+  'ElastiCache': {
+    'cache.t3.micro': { hourly: 0.017, monthly: 12.41 },
+    'cache.t3.small': { hourly: 0.034, monthly: 24.82 }
+  },
+  'ECS': {
+    'fargate_per_vcpu_hour': 0.04048,
+    'fargate_per_gb_hour': 0.004445,
+    'ec2_launch_type': 0 // No additional charges when using EC2
   }
 };
 
@@ -142,14 +167,91 @@ export function calculateAWSCosts(analysisResult: ArchitectureAnalysisResult, re
 
       case 'CLOUDFRONT':
         const bandwidth = service.bandwidth || 1000; // Default 1TB/month
-        const cfCost = bandwidth * AWS_PRICING.CloudFront.data_transfer.per_gb;
+        const cfCost = bandwidth * AWS_PRICING.CloudFront.data_transfer_per_gb + AWS_PRICING.CloudFront.monthly_base;
         costs.network += cfCost;
         costs.details.push({
           service: 'CloudFront',
           resource: `${bandwidth} GB Data Transfer`,
           quantity: bandwidth,
-          unit_cost: AWS_PRICING.CloudFront.data_transfer.per_gb,
+          unit_cost: AWS_PRICING.CloudFront.data_transfer_per_gb,
           total_cost: cfCost
+        });
+        break;
+
+      case 'WAF':
+      case 'AWS WAF':
+        const wafCost = AWS_PRICING.WAF.monthly_base + AWS_PRICING.WAF.per_million_requests;
+        costs.network += wafCost;
+        costs.details.push({
+          service: 'AWS WAF',
+          resource: 'Base + 1M requests',
+          quantity: 1,
+          unit_cost: wafCost,
+          total_cost: wafCost
+        });
+        break;
+
+      case 'ECS':
+      case 'ELASTIC CONTAINER SERVICE':
+        // Assuming EC2 launch type (no additional charges)
+        const ecsCost = AWS_PRICING.ECS.ec2_launch_type;
+        costs.compute += ecsCost;
+        costs.details.push({
+          service: 'Amazon ECS',
+          resource: 'EC2 launch type',
+          quantity: service.count,
+          unit_cost: 0,
+          total_cost: ecsCost
+        });
+        break;
+
+      case 'ELASTICACHE':
+        const cacheInstanceType = service.instance_type || 'cache.t3.micro';
+        const cacheCost = (AWS_PRICING.ElastiCache[cacheInstanceType as keyof typeof AWS_PRICING.ElastiCache]?.monthly || 12.41) * service.count;
+        costs.database += cacheCost;
+        costs.details.push({
+          service: 'Amazon ElastiCache',
+          resource: `${service.count}x ${cacheInstanceType}`,
+          quantity: service.count,
+          unit_cost: AWS_PRICING.ElastiCache[cacheInstanceType as keyof typeof AWS_PRICING.ElastiCache]?.monthly || 12.41,
+          total_cost: cacheCost
+        });
+        break;
+
+      case 'CLOUDWATCH':
+        const cwCost = AWS_PRICING.CloudWatch.basic_monitoring;
+        costs.network += cwCost;
+        costs.details.push({
+          service: 'Amazon CloudWatch',
+          resource: 'Basic monitoring',
+          quantity: 1,
+          unit_cost: cwCost,
+          total_cost: cwCost
+        });
+        break;
+
+      case 'CLOUDTRAIL':
+        const ctCost = AWS_PRICING.CloudTrail.management_events;
+        costs.network += ctCost;
+        costs.details.push({
+          service: 'AWS CloudTrail',
+          resource: 'Management events',
+          quantity: 1,
+          unit_cost: ctCost,
+          total_cost: ctCost
+        });
+        break;
+
+      case 'SNS':
+      case 'SIMPLE NOTIFICATION SERVICE':
+        const snsCost = AWS_PRICING.SNS.per_1000_notifications;
+        costs.network += snsCost;
+        costs.details.push({
+          service: 'Amazon SNS',
+          resource: '1,000 notifications',
+          quantity: 1,
+          unit_cost: snsCost,
+          total_cost: snsCost
         });
         break;
 
