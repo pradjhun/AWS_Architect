@@ -1,0 +1,1330 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 3380
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 20 Tf
+23. TL
+0 g
+56.6929133858267775 756.8506299212598378 Td
+(AWS Monitoring Setup Guide) Tj
+ET
+0.23 0.51 0.96 RG
+1.4173228346456694 w
+56.6929133858267775 742.6774015748030706 m
+538.5826771653544256 742.6774015748030706 l
+S
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+425.1968503937008563 771.0238582677164914 Td
+(Generated on: 9/3/2025) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 1) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F2 16 Tf
+18.3999999999999986 TL
+0 g
+56.6929133858267775 700.15771653543311 Td
+(AWS Monitoring and Alerting Setup Guide) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 643.4648031496062686 Td
+(Table of Contents) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 609.4490551181102092 Td
+(1. [CloudWatch Dashboard Configuration]\(#cloudwatch-dashboard-configuration\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 586.7718897637794271 Td
+(2. [Key Metrics and Alert Thresholds]\(#key-metrics-and-alert-thresholds\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 564.0947244094487587 Td
+(3. [Escalation Procedures]\(#escalation-procedures\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 541.4175590551180903 Td
+(4. [Performance Optimization Recommendations]\(#performance-optimization-recommendations\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 518.7403937007873083 Td
+(5. [Cost Monitoring Setup]\(#cost-monitoring-setup\)) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 481.8899999999999295 Td
+(CloudWatch Dashboard Configuration) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 433.7010236220471597 Td
+(To create a comprehensive CloudWatch dashboard for your multi-tier web application, follow these steps:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 396.850629921259781 Td
+(1. Open the CloudWatch console) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 374.1734645669290558 Td
+(2. Click on "Dashboards" in the left navigation pane) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 351.4962992125983874 Td
+(3. Click "Create dashboard") Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 328.8191338582676053 Td
+(4. Name your dashboard \(e.g., "Production-Web-App-Dashboard"\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 306.1419685039369369 Td
+(5. Add the following widgets to your dashboard:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 269.2915748031495013 Td
+(   - Line graphs for key metrics \(listed in the next section\)) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 246.614409448818833 Td
+(   - Text widgets for important information and links) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 223.9372440944881646 Td
+(   - Alarm status widgets for critical alarms) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 201.2600787401573825 Td
+(   - Log insights widgets for application logs) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 164.4096850393699469 Td
+(6. Arrange the widgets in a logical order, grouping related metrics together) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 127.559291338582625 Td
+(Key Metrics and Alert Thresholds) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 79.3703149606297984 Td
+(Route 53) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 2876
+>>
+stream
+1.4173228346456694 w
+0.23 0.51 0.96 RG
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 2) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 756.8506299212598378 Td
+(Metric: HealthCheckStatus) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 734.1734645669291695 Td
+(Threshold: < 1 for 1 minute) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 711.4962992125983874 Td
+(Action: Critical alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 674.6459055118109518 Td
+(CloudFront) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 646.2994488188976447 Td
+(Metric: 5xxErrorRate) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 623.6222834645668627 Td
+(Threshold: > 1% for 5 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 600.9451181102361943 Td
+(Action: Critical alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 564.0947244094487587 Td
+(Elastic Load Balancing) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 535.748267716535338 Td
+(Metric: UnHealthyHostCount) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 513.0711023622046696 Td
+(Threshold: > 0 for 5 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 490.3939370078739444 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 453.5435433070865656 Td
+(Metric: TargetResponseTime) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 430.8663779527558404 Td
+(Threshold: > 1 second for 15 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 408.1892125984251152 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 371.3388188976377364 Td
+(EC2) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 342.9923622047243725 Td
+(Metric: CPUUtilization) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 320.3151968503935905 Td
+(Threshold: > 80% for 15 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 297.6380314960629221 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 260.7876377952754865 Td
+(Metric: StatusCheckFailed) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 238.1104724409448181 Td
+(Threshold: > 0 for 5 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 215.4333070866141497 Td
+(Action: Critical alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 178.5829133858267141 Td
+(Auto Scaling) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 150.2364566929132934 Td
+(Metric: GroupInServiceInstances) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 127.559291338582625 Td
+(Threshold: < Desired Capacity for 10 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 104.882125984251843 Td
+(Action: Warning alert) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 2746
+>>
+stream
+1.4173228346456694 w
+0.23 0.51 0.96 RG
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 3) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 756.8506299212598378 Td
+(S3) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 728.5041732283464171 Td
+(Metric: 4xxErrors) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 705.8270078740157487 Td
+(Threshold: > 100 for 5 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 683.1498425196850803 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 646.2994488188976447 Td
+(DynamoDB) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 617.952992125984224 Td
+(Metric: ReadThrottleEvents or WriteThrottleEvents) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 595.2758267716535556 Td
+(Threshold: > 0 for 5 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 572.5986614173227736 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 535.748267716535338 Td
+(ElastiCache) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 507.4018110236219741 Td
+(Metric: CPUUtilization) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 484.7246456692913057 Td
+(Threshold: > 90% for 15 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 462.0474803149605805 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 425.1970866141731449 Td
+(RDS) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 396.850629921259781 Td
+(Metric: CPUUtilization) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 374.1734645669290558 Td
+(Threshold: > 80% for 15 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 351.4962992125983874 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 314.6459055118109518 Td
+(Metric: FreeableMemory) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 291.9687401574802834 Td
+(Threshold: < 10% for 15 minutes) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 269.2915748031495013 Td
+(Action: Critical alert) Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0 g
+56.6929133858267775 232.4411811023621794 Td
+(SES) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 204.0947244094487587 Td
+(Metric: Reputation.BounceRate) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 181.4175590551179766 Td
+(Threshold: > 5% for 1 hour) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+70.8661417322834666 158.7403937007873083 Td
+(Action: Warning alert) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 121.8899999999998727 Td
+(Escalation Procedures) Tj
+ET
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 3433
+>>
+stream
+1.4173228346456694 w
+0.23 0.51 0.96 RG
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 4) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 756.8506299212598378 Td
+(1. Warning Alerts:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 734.1734645669291695 Td
+(   - Notify on-call engineer via SNS) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 711.4962992125983874 Td
+(   - If not acknowledged within 15 minutes, escalate to senior engineer) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 674.6459055118109518 Td
+(2. Critical Alerts:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 651.9687401574802834 Td
+(   - Notify on-call engineer and senior engineer via SNS and phone call) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 629.291574803149615 Td
+(   - If not acknowledged within 5 minutes, escalate to engineering manager) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 592.4411811023621794 Td
+(3. Incident Response:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 569.7640157480313974 Td
+(   - On-call engineer investigates and attempts to resolve the issue) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 547.086850393700729 Td
+(   - If unable to resolve within 30 minutes, engage additional team members) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 524.4096850393700606 Td
+(   - For prolonged outages \(> 1 hour\), notify stakeholders and consider public status page update) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 487.559291338582625 Td
+(Performance Optimization Recommendations) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 439.3703149606298552 Td
+(1. EC2:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 416.69314960629913 Td
+(   - Use EC2 Auto Scaling to automatically adjust capacity based on demand) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 394.0159842519684616 Td
+(   - Implement application-level caching to reduce database load) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 357.1655905511810261 Td
+(2. RDS:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 334.4884251968503008 Td
+(   - Enable and tune Performance Insights for database query optimization) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 311.8112598425195756 Td
+(   - Consider using read replicas for read-heavy workloads) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 274.9608661417322537 Td
+(3. DynamoDB:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 252.2837007874014716 Td
+(   - Use DAX \(DynamoDB Accelerator\) for frequently accessed data) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 229.6065354330708033 Td
+(   - Implement efficient partition key design to avoid hot partitions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 192.7561417322833677 Td
+(4. ElastiCache:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 170.0789763779526993 Td
+(   - Implement proper cache invalidation strategies) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 147.4018110236219172 Td
+(   - Monitor cache hit ratio and adjust cache size as needed) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 110.5514173228345953 Td
+(5. CloudFront:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 87.8742519685038133 Td
+(   - Enable caching for static content) Tj
+ET
+endstream
+endobj
+11 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 12 0 R
+>>
+endobj
+12 0 obj
+<<
+/Length 3226
+>>
+stream
+1.4173228346456694 w
+0.23 0.51 0.96 RG
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 5) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 756.8506299212598378 Td
+(   - Use Origin Shield to reduce load on your origin) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 720.0002362204724022 Td
+(6. S3:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 697.3230708661417339 Td
+(   - Enable transfer acceleration for faster uploads from distant locations) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 674.6459055118109518 Td
+(   - Use appropriate storage classes for infrequently accessed data) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0 g
+56.6929133858267775 637.7955118110235162 Td
+(Cost Monitoring Setup) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 589.6065354330708033 Td
+(1. Enable AWS Cost Explorer:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 566.9293700787401349 Td
+(   - Go to the AWS Billing Console) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 544.2522047244094665 Td
+(   - Navigate to Cost Explorer and enable it) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 507.4018110236219741 Td
+(2. Set up AWS Budgets:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 484.7246456692913057 Td
+(   - Create a budget for overall monthly spend) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 462.0474803149605805 Td
+(   - Set alerts at 50%, 80%, and 100% of the budget) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 425.1970866141731449 Td
+(3. Configure Cost Anomaly Detection:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 402.5199212598424765 Td
+(   - Enable AWS Cost Anomaly Detection) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 379.8427559055117513 Td
+(   - Set up notifications for detected anomalies) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 342.9923622047243725 Td
+(4. Create a Cost & Usage Report:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 320.3151968503935905 Td
+(   - Go to the AWS Cost Management Console) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 297.6380314960629221 Td
+(   - Create a detailed Cost & Usage Report delivered to an S3 bucket) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 260.7876377952754865 Td
+(5. Add cost widgets to your CloudWatch dashboard:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 238.1104724409448181 Td
+(   - Total monthly spend) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 215.4333070866141497 Td
+(   - Spend by service) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 192.7561417322833677 Td
+(   - Forecast vs. actual spend) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 155.9057480314959321 Td
+(6. Set up custom CloudWatch metrics for cost-related data:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 133.2285826771652637 Td
+(   - EC2 Reserved Instance coverage) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 110.5514173228345953 Td
+(   - S3 storage by storage class) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 87.8742519685038133 Td
+(   - RDS instance utilization) Tj
+ET
+endstream
+endobj
+13 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 14 0 R
+>>
+endobj
+14 0 obj
+<<
+/Length 1542
+>>
+stream
+1.4173228346456694 w
+0.23 0.51 0.96 RG
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+56.6929133858267775 28.3464566929134207 Td
+(AWS Deploy App - Page 6) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0 g
+425.1968503937008563 28.3464566929134207 Td
+(Confidential - Internal Use Only) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 742.6774015748030706 Td
+(7. Implement tagging strategy:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 720.0002362204724022 Td
+(   - Enforce tagging policies for all resources) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 697.3230708661417339 Td
+(   - Create tag-based views in Cost Explorer) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 660.4726771653542983 Td
+(8. Schedule regular cost review meetings:) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 637.7955118110235162 Td
+(   - Weekly review of Cost Explorer data) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 615.1183464566928478 Td
+(   - Monthly deep dive into Cost & Usage Reports) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 592.4411811023621794 Td
+(   - Quarterly optimization planning sessions) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0 g
+56.6929133858267775 555.5907874015747439 Td
+(By implementing this comprehensive monitoring and alerting setup, you'll have a robust system in place to) Tj
+T* (ensure the health, performance, and cost-effectiveness of your AWS infrastructure. Regular reviews and) Tj
+T* (adjustments of these metrics and thresholds will help maintain an optimized environment as your application) Tj
+T* (evolves.) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R ]
+/Count 6
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+21 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+22 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+23 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+24 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+25 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+26 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+27 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+28 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 15 0 R
+/F2 16 0 R
+/F3 17 0 R
+/F4 18 0 R
+/F5 19 0 R
+/F6 20 0 R
+/F7 21 0 R
+/F8 22 0 R
+/F9 23 0 R
+/F10 24 0 R
+/F11 25 0 R
+/F12 26 0 R
+/F13 27 0 R
+/F14 28 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+29 0 obj
+<<
+/Producer (jsPDF 3.0.2)
+/CreationDate (D:20250903104807-00'00')
+>>
+endobj
+30 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 31
+0000000000 65535 f 
+0000018360 00000 n 
+0000020214 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000003584 00000 n 
+0000003721 00000 n 
+0000006649 00000 n 
+0000006786 00000 n 
+0000009584 00000 n 
+0000009722 00000 n 
+0000013208 00000 n 
+0000013347 00000 n 
+0000016626 00000 n 
+0000016765 00000 n 
+0000018449 00000 n 
+0000018575 00000 n 
+0000018706 00000 n 
+0000018840 00000 n 
+0000018978 00000 n 
+0000019102 00000 n 
+0000019231 00000 n 
+0000019363 00000 n 
+0000019499 00000 n 
+0000019627 00000 n 
+0000019754 00000 n 
+0000019883 00000 n 
+0000020016 00000 n 
+0000020118 00000 n 
+0000020467 00000 n 
+0000020553 00000 n 
+trailer
+<<
+/Size 31
+/Root 30 0 R
+/Info 29 0 R
+/ID [ <DD02570CF6C1EA452397C3B9386675F3> <DD02570CF6C1EA452397C3B9386675F3> ]
+>>
+startxref
+20657
+%%EOF
