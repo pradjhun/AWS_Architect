@@ -20,6 +20,7 @@ export interface IStorage {
   // Architecture Analysis methods
   getArchitectureAnalysis(id: string): Promise<ArchitectureAnalysis | undefined>;
   createArchitectureAnalysis(analysis: InsertArchitectureAnalysis): Promise<ArchitectureAnalysis>;
+  updateArchitectureAnalysis(id: string, analysis: Partial<ArchitectureAnalysis>): Promise<ArchitectureAnalysis | undefined>;
   updateArchitectureAnalysisStatus(id: string, status: string): Promise<void>;
 
   // Deployment methods
@@ -81,6 +82,16 @@ export class MemStorage implements IStorage {
     };
     this.architectureAnalyses.set(id, analysis);
     return analysis;
+  }
+
+  async updateArchitectureAnalysis(id: string, updateData: Partial<ArchitectureAnalysis>): Promise<ArchitectureAnalysis | undefined> {
+    const analysis = this.architectureAnalyses.get(id);
+    if (analysis) {
+      const updated = { ...analysis, ...updateData, updatedAt: new Date() };
+      this.architectureAnalyses.set(id, updated);
+      return updated;
+    }
+    return undefined;
   }
 
   async updateArchitectureAnalysisStatus(id: string, status: string): Promise<void> {

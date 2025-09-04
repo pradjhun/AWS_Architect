@@ -5,6 +5,7 @@ import { useToast } from "@/hooks/use-toast";
 import { CloudUploadIcon, FolderOpenIcon, XIcon, SearchIcon, ImageIcon } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import SizingAdjustment from "./SizingAdjustment";
 
 interface UploadSectionProps {
   onAnalysisComplete: (data: any) => void;
@@ -14,6 +15,7 @@ interface UploadSectionProps {
 export default function UploadSection({ onAnalysisComplete, currentStep }: UploadSectionProps) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const [analysisData, setAnalysisData] = useState<any>(null);
   const { toast } = useToast();
 
   const analysisMutation = useMutation({
@@ -30,6 +32,7 @@ export default function UploadSection({ onAnalysisComplete, currentStep }: Uploa
         title: "Analysis Complete",
         description: `Identified ${data.services?.length || 0} AWS services with ${(data.confidence * 100).toFixed(1)}% confidence`,
       });
+      setAnalysisData(data);
       onAnalysisComplete(data);
     },
     onError: (error) => {
@@ -266,6 +269,18 @@ export default function UploadSection({ onAnalysisComplete, currentStep }: Uploa
             </div>
           )}
         </div>
+
+        {/* Sizing Adjustment Component */}
+        {analysisData && analysisData.services && (
+          <SizingAdjustment
+            services={analysisData.services}
+            analysisId={analysisData.id}
+            onSizingUpdate={(updatedData) => {
+              setAnalysisData(updatedData);
+              onAnalysisComplete(updatedData);
+            }}
+          />
+        )}
       </CardContent>
     </Card>
   );

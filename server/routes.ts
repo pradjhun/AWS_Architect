@@ -309,6 +309,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Cost recalculation endpoint for sizing adjustments
+  app.post('/api/recalculate-costs', async (req, res) => {
+    try {
+      const { analysisId, services } = req.body;
+
+      if (!analysisId || !services) {
+        return res.status(400).json({ error: 'analysisId and services are required' });
+      }
+
+      // Get the existing analysis
+      const analysis = await storage.getArchitectureAnalysis(analysisId);
+      if (!analysis) {
+        return res.status(404).json({ error: 'Analysis not found' });
+      }
+
+      // Recalculate costs with the updated services
+      const costBreakdown = calculateAWSCosts(services, 'us-east-1');
+
+      // Update the analysis with new services and cost breakdown
+      const analysisResult = analysis.analysisResult as any;
+      const updatedAnalysis = await storage.updateArchitectureAnalysis(analysisId, {
+        analysisResult: {
+          ...analysisResult,
+          services: services
+        },
+        estimatedCost: costBreakdown
+      });
+
+      res.json({
+        id: analysisId,
+        services: services,
+        costBreakdown: costBreakdown,
+        confidence: analysisResult.confidence,
+        architecture_patterns: analysisResult.architecture_patterns,
+        recommendations: analysisResult.recommendations
+      });
+
+    } catch (error) {
+      console.error('Error recalculating costs:', error);
+      res.status(500).json({ error: 'Failed to recalculate costs' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
