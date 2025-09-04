@@ -86,50 +86,182 @@ export default function SizingAdjustment({ services, analysisId, onSizingUpdate 
     const serviceName = service.name.toLowerCase();
     const serviceType = service.type.toLowerCase();
     
-    // Define what configuration options each service type should have
-    if (serviceName.includes('cloudfront') || serviceType.includes('cdn')) {
+    // Comprehensive AWS service configuration mapping
+    
+    // Email Services
+    if (serviceName.includes('simple email service') || serviceName.includes('ses') || 
+        serviceType.includes('email') || serviceType.includes('application integration')) {
       return {
         showCount: false,
         showInstanceType: false,
-        countLabel: 'Distributions',
-        customFields: ['priceClass']
+        countLabel: 'Email Service',
+        customFields: [
+          { name: 'emailsPerMonth', label: 'Emails per Month', type: 'number', placeholder: '10000' },
+          { name: 'attachmentSize', label: 'Avg Attachment Size (KB)', type: 'number', placeholder: '100' }
+        ],
+        description: 'SES pricing is based on emails sent and received, not instance count.'
       };
-    } else if (serviceName.includes('s3') || serviceType.includes('storage')) {
+    }
+    
+    // Content Delivery Network
+    else if (serviceName.includes('cloudfront') || serviceType.includes('cdn')) {
       return {
         showCount: false,
         showInstanceType: false,
-        countLabel: 'Buckets',
-        customFields: ['storageClass']
+        countLabel: 'CDN Service',
+        customFields: [
+          { name: 'dataTransferGB', label: 'Data Transfer (GB/month)', type: 'number', placeholder: '1000' },
+          { name: 'requests', label: 'Requests (millions/month)', type: 'number', placeholder: '10' },
+          { name: 'priceClass', label: 'Price Class', type: 'select', options: ['All Locations', 'North America & Europe', 'North America Only'] }
+        ],
+        description: 'CloudFront pricing is based on data transfer and requests, not distributions.'
       };
-    } else if (serviceName.includes('lambda') || serviceType.includes('function')) {
+    }
+    
+    // Storage Services
+    else if (serviceName.includes('s3') || serviceType.includes('storage')) {
       return {
         showCount: false,
         showInstanceType: false,
-        countLabel: 'Functions',
-        customFields: ['memory', 'runtime']
+        countLabel: 'Storage Service',
+        customFields: [
+          { name: 'storageGB', label: 'Storage (GB)', type: 'number', placeholder: '1000' },
+          { name: 'storageClass', label: 'Storage Class', type: 'select', options: ['Standard', 'Intelligent-Tiering', 'Standard-IA', 'Glacier', 'Deep Archive'] },
+          { name: 'requests', label: 'Requests per Month', type: 'number', placeholder: '100000' }
+        ],
+        description: 'S3 pricing is based on storage volume, requests, and data transfer.'
       };
-    } else if (serviceType.includes('network') || serviceType.includes('load balancer')) {
+    }
+    
+    // Lambda Functions
+    else if (serviceName.includes('lambda') || serviceType.includes('function')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Serverless Functions',
+        customFields: [
+          { name: 'invocations', label: 'Invocations per Month', type: 'number', placeholder: '1000000' },
+          { name: 'memory', label: 'Memory (MB)', type: 'select', options: ['128', '256', '512', '1024', '2048', '3008'] },
+          { name: 'duration', label: 'Avg Duration (ms)', type: 'number', placeholder: '200' }
+        ],
+        description: 'Lambda pricing is based on invocations, memory allocation, and execution time.'
+      };
+    }
+    
+    // Database Services
+    else if (serviceName.includes('rds') || serviceName.includes('database') || serviceType.includes('database')) {
+      return {
+        showCount: true,
+        showInstanceType: true,
+        countLabel: 'Database Instances',
+        customFields: [
+          { name: 'engine', label: 'Database Engine', type: 'select', options: ['MySQL', 'PostgreSQL', 'Oracle', 'SQL Server', 'MariaDB'] },
+          { name: 'storage', label: 'Storage (GB)', type: 'number', placeholder: '100' },
+          { name: 'multiAZ', label: 'Multi-AZ', type: 'select', options: ['Yes', 'No'] }
+        ],
+        description: 'RDS pricing includes instance costs, storage, and backup storage.'
+      };
+    }
+    
+    // SNS - Simple Notification Service
+    else if (serviceName.includes('simple notification service') || serviceName.includes('sns') || 
+             serviceType.includes('notification')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Notification Service',
+        customFields: [
+          { name: 'notifications', label: 'Notifications per Month', type: 'number', placeholder: '100000' },
+          { name: 'sms', label: 'SMS Messages per Month', type: 'number', placeholder: '1000' },
+          { name: 'email', label: 'Email Notifications per Month', type: 'number', placeholder: '10000' }
+        ],
+        description: 'SNS pricing is based on number of notifications and delivery type.'
+      };
+    }
+    
+    // SQS - Simple Queue Service
+    else if (serviceName.includes('simple queue service') || serviceName.includes('sqs') || 
+             serviceType.includes('queue')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Queue Service',
+        customFields: [
+          { name: 'requests', label: 'Requests per Month', type: 'number', placeholder: '1000000' },
+          { name: 'queueType', label: 'Queue Type', type: 'select', options: ['Standard', 'FIFO'] }
+        ],
+        description: 'SQS pricing is based on number of requests, not queue count.'
+      };
+    }
+    
+    // API Gateway
+    else if (serviceName.includes('api gateway') || serviceType.includes('api')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'API Service',
+        customFields: [
+          { name: 'apiCalls', label: 'API Calls per Month', type: 'number', placeholder: '1000000' },
+          { name: 'caching', label: 'Caching', type: 'select', options: ['None', '0.5GB', '1.6GB', '6.1GB', '13.5GB'] }
+        ],
+        description: 'API Gateway pricing is based on API calls and optional caching.'
+      };
+    }
+    
+    // ElastiCache
+    else if (serviceName.includes('elasticache') || serviceType.includes('cache')) {
+      return {
+        showCount: true,
+        showInstanceType: true,
+        countLabel: 'Cache Nodes',
+        customFields: [
+          { name: 'engine', label: 'Cache Engine', type: 'select', options: ['Redis', 'Memcached'] },
+          { name: 'nodeType', label: 'Node Type', type: 'select', options: ['cache.t3.micro', 'cache.t3.small', 'cache.m5.large', 'cache.r5.large'] }
+        ],
+        description: 'ElastiCache pricing is based on cache node hours and data transfer.'
+      };
+    }
+    
+    // Load Balancers
+    else if (serviceType.includes('network') || serviceType.includes('load balancer') || 
+             serviceName.includes('load balancer')) {
       return {
         showCount: true,
         showInstanceType: false,
         countLabel: 'Load Balancers',
-        customFields: []
-      };
-    } else if (serviceType.includes('compute') || serviceType.includes('ec2') || serviceType.includes('database')) {
-      return {
-        showCount: true,
-        showInstanceType: true,
-        countLabel: 'Instances',
-        customFields: []
+        customFields: [
+          { name: 'lbType', label: 'Load Balancer Type', type: 'select', options: ['Application Load Balancer', 'Network Load Balancer', 'Classic Load Balancer'] },
+          { name: 'dataProcessed', label: 'Data Processed (GB/month)', type: 'number', placeholder: '1000' }
+        ],
+        description: 'Load balancer pricing includes fixed hourly cost plus data processing charges.'
       };
     }
     
-    // Default configuration
+    // EC2 Compute Instances
+    else if (serviceName.includes('ec2') || serviceType.includes('compute') || serviceType.includes('server')) {
+      return {
+        showCount: true,
+        showInstanceType: true,
+        countLabel: 'EC2 Instances',
+        customFields: [
+          { name: 'os', label: 'Operating System', type: 'select', options: ['Linux', 'Windows', 'RHEL', 'SUSE'] },
+          { name: 'tenancy', label: 'Tenancy', type: 'select', options: ['Shared', 'Dedicated'] },
+          { name: 'storage', label: 'EBS Storage (GB)', type: 'number', placeholder: '100' }
+        ],
+        description: 'EC2 pricing includes instance hours, storage, and data transfer.'
+      };
+    }
+    
+    // Default for unrecognized services
     return {
-      showCount: true,
+      showCount: false,
       showInstanceType: false,
-      countLabel: 'Count',
-      customFields: []
+      countLabel: 'Managed Service',
+      customFields: [
+        { name: 'usageMetric', label: 'Primary Usage Metric', type: 'text', placeholder: 'e.g., requests, GB, hours' },
+        { name: 'monthlyUsage', label: 'Monthly Usage', type: 'number', placeholder: '1000' }
+      ],
+      description: 'This is a managed AWS service with usage-based pricing. Configure the primary usage metrics.'
     };
   };
 
@@ -228,13 +360,68 @@ export default function SizingAdjustment({ services, analysisId, onSizingUpdate 
                   </div>
                 </div>
 
-                {/* Service-specific configuration note */}
-                {!config.showCount && (
-                  <div className="mt-3 p-3 bg-accent rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      <strong>{service.name}</strong> is a managed service with usage-based pricing. 
-                      Costs depend on data transfer, requests, and features used rather than instance count.
-                    </p>
+                {/* Service-specific custom fields */}
+                {config.customFields && config.customFields.length > 0 && (
+                  <div className="mt-4 p-4 bg-accent rounded-lg">
+                    <h4 className="text-sm font-medium mb-3">{config.countLabel} Configuration</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {config.customFields.map((field, fieldIndex) => (
+                        <div key={field.name}>
+                          <Label htmlFor={`${field.name}-${index}`}>{field.label}</Label>
+                          {field.type === 'select' ? (
+                            <Select 
+                              value={service.customConfig?.[field.name] || ''}
+                              onValueChange={(value) => {
+                                const updated = [...adjustedServices];
+                                updated[index] = {
+                                  ...updated[index],
+                                  customConfig: {
+                                    ...updated[index].customConfig,
+                                    [field.name]: value
+                                  }
+                                };
+                                setAdjustedServices(updated);
+                              }}
+                            >
+                              <SelectTrigger data-testid={`select-${field.name}-${index}`}>
+                                <SelectValue placeholder={`Select ${field.label}`} />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {field.options?.map((option) => (
+                                  <SelectItem key={option} value={option}>
+                                    {option}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <Input
+                              id={`${field.name}-${index}`}
+                              type={field.type}
+                              placeholder={field.placeholder}
+                              value={service.customConfig?.[field.name] || ''}
+                              onChange={(e) => {
+                                const updated = [...adjustedServices];
+                                updated[index] = {
+                                  ...updated[index],
+                                  customConfig: {
+                                    ...updated[index].customConfig,
+                                    [field.name]: e.target.value
+                                  }
+                                };
+                                setAdjustedServices(updated);
+                              }}
+                              data-testid={`input-${field.name}-${index}`}
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    {config.description && (
+                      <p className="text-sm text-muted-foreground mt-3">
+                        <strong>{service.name}:</strong> {config.description}
+                      </p>
+                    )}
                   </div>
                 )}
               </div>

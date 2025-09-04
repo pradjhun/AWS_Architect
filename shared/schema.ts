@@ -96,6 +96,7 @@ export interface IdentifiedService {
   instance_type?: string;
   storage_size?: number;
   bandwidth?: number;
+  customConfig?: Record<string, string | number>;
 }
 
 export interface CostBreakdown {
