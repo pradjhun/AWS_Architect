@@ -82,6 +82,57 @@ export default function SizingAdjustment({ services, analysisId, onSizingUpdate 
     return [];
   };
 
+  const getServiceConfiguration = (service: Service) => {
+    const serviceName = service.name.toLowerCase();
+    const serviceType = service.type.toLowerCase();
+    
+    // Define what configuration options each service type should have
+    if (serviceName.includes('cloudfront') || serviceType.includes('cdn')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Distributions',
+        customFields: ['priceClass']
+      };
+    } else if (serviceName.includes('s3') || serviceType.includes('storage')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Buckets',
+        customFields: ['storageClass']
+      };
+    } else if (serviceName.includes('lambda') || serviceType.includes('function')) {
+      return {
+        showCount: false,
+        showInstanceType: false,
+        countLabel: 'Functions',
+        customFields: ['memory', 'runtime']
+      };
+    } else if (serviceType.includes('network') || serviceType.includes('load balancer')) {
+      return {
+        showCount: true,
+        showInstanceType: false,
+        countLabel: 'Load Balancers',
+        customFields: []
+      };
+    } else if (serviceType.includes('compute') || serviceType.includes('ec2') || serviceType.includes('database')) {
+      return {
+        showCount: true,
+        showInstanceType: true,
+        countLabel: 'Instances',
+        customFields: []
+      };
+    }
+    
+    // Default configuration
+    return {
+      showCount: true,
+      showInstanceType: false,
+      countLabel: 'Count',
+      customFields: []
+    };
+  };
+
   const hasChanges = JSON.stringify(services) !== JSON.stringify(adjustedServices);
 
   return (
@@ -97,74 +148,98 @@ export default function SizingAdjustment({ services, analysisId, onSizingUpdate 
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {adjustedServices.map((service, index) => (
-            <div key={index} className="border border-border rounded-lg p-4">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                {/* Service Name (Read-only) */}
-                <div>
-                  <Label htmlFor={`service-name-${index}`}>Service</Label>
-                  <Input
-                    id={`service-name-${index}`}
-                    value={service.name}
-                    disabled
-                    className="bg-muted"
-                    data-testid={`input-service-name-${index}`}
-                  />
-                </div>
-
-                {/* Instance Count */}
-                <div>
-                  <Label htmlFor={`service-count-${index}`}>Count</Label>
-                  <Input
-                    id={`service-count-${index}`}
-                    type="number"
-                    min="1"
-                    max="100"
-                    value={service.count}
-                    onChange={(e) => handleServiceUpdate(index, 'count', e.target.value)}
-                    data-testid={`input-service-count-${index}`}
-                  />
-                </div>
-
-                {/* Instance Type (if applicable) */}
-                {(service.type.toLowerCase().includes('ec2') || 
-                  service.type.toLowerCase().includes('rds') || 
-                  service.type.toLowerCase().includes('compute') ||
-                  service.type.toLowerCase().includes('database')) && (
+          {adjustedServices.map((service, index) => {
+            const config = getServiceConfiguration(service);
+            return (
+              <div key={index} className="border border-border rounded-lg p-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                  {/* Service Name (Read-only) */}
                   <div>
-                    <Label htmlFor={`service-type-${index}`}>Instance Type</Label>
-                    <Select 
-                      value={service.instance_type || ''} 
-                      onValueChange={(value) => handleServiceUpdate(index, 'instance_type', value)}
-                    >
-                      <SelectTrigger data-testid={`select-instance-type-${index}`}>
-                        <SelectValue placeholder="Select instance type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {getInstanceTypeOptions(service.type).map((instanceType) => (
-                          <SelectItem key={instanceType} value={instanceType}>
-                            {instanceType}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor={`service-name-${index}`}>Service</Label>
+                    <Input
+                      id={`service-name-${index}`}
+                      value={service.name}
+                      disabled
+                      className="bg-muted"
+                      data-testid={`input-service-name-${index}`}
+                    />
+                  </div>
+
+                  {/* Count/Configuration field */}
+                  {config.showCount ? (
+                    <div>
+                      <Label htmlFor={`service-count-${index}`}>{config.countLabel}</Label>
+                      <Input
+                        id={`service-count-${index}`}
+                        type="number"
+                        min="1"
+                        max="100"
+                        value={service.count}
+                        onChange={(e) => handleServiceUpdate(index, 'count', e.target.value)}
+                        data-testid={`input-service-count-${index}`}
+                      />
+                    </div>
+                  ) : (
+                    <div>
+                      <Label>Configuration</Label>
+                      <Input
+                        value="Managed Service"
+                        disabled
+                        className="bg-muted text-sm"
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Pricing based on usage, not instance count
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Instance Type (if applicable) */}
+                  {config.showInstanceType && (
+                    <div>
+                      <Label htmlFor={`service-type-${index}`}>Instance Type</Label>
+                      <Select 
+                        value={service.instance_type || ''} 
+                        onValueChange={(value) => handleServiceUpdate(index, 'instance_type', value)}
+                      >
+                        <SelectTrigger data-testid={`select-instance-type-${index}`}>
+                          <SelectValue placeholder="Select instance type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {getInstanceTypeOptions(service.type).map((instanceType) => (
+                            <SelectItem key={instanceType} value={instanceType}>
+                              {instanceType}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+
+                  {/* Service Type (Read-only) */}
+                  <div>
+                    <Label htmlFor={`service-type-display-${index}`}>Type</Label>
+                    <Input
+                      id={`service-type-display-${index}`}
+                      value={service.type}
+                      disabled
+                      className="bg-muted"
+                      data-testid={`input-service-type-${index}`}
+                    />
+                  </div>
+                </div>
+
+                {/* Service-specific configuration note */}
+                {!config.showCount && (
+                  <div className="mt-3 p-3 bg-accent rounded-lg">
+                    <p className="text-sm text-muted-foreground">
+                      <strong>{service.name}</strong> is a managed service with usage-based pricing. 
+                      Costs depend on data transfer, requests, and features used rather than instance count.
+                    </p>
                   </div>
                 )}
-
-                {/* Service Type (Read-only) */}
-                <div>
-                  <Label htmlFor={`service-type-display-${index}`}>Type</Label>
-                  <Input
-                    id={`service-type-display-${index}`}
-                    value={service.type}
-                    disabled
-                    className="bg-muted"
-                    data-testid={`input-service-type-${index}`}
-                  />
-                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {hasChanges && (
