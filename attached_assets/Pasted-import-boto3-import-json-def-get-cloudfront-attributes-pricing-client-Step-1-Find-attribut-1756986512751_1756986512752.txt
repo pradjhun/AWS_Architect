@@ -1,0 +1,54 @@
+import boto3
+import json
+
+def get_cloudfront_attributes(pricing_client):
+    # Step 1: Find attribute names for AmazonCloudFront
+    response = pricing_client.describe_services(ServiceCode="AmazonCloudFront")
+    return response['Services'][0]['AttributeNames']
+
+def get_attribute_values(pricing_client, attribute_name):
+    # Step 2: Get values for a specific attribute
+    response = pricing_client.get_attribute_values(
+        ServiceCode="AmazonCloudFront",
+        AttributeName=attribute_name
+    )
+    return [v["Value"] for v in response["AttributeValues"]]
+
+def get_pricing(pricing_client, field, value, additional_filters=[]):
+    # Step 4: Fetch pricing based on filters
+    filters = [{'Field': field, 'Value': value, 'Type': 'TERM_MATCH'}]
+    filters.extend(additional_filters)
+    response = pricing_client.get_products(
+        ServiceCode="AmazonCloudFront",
+        Filters=filters
+    )
+    return [json.loads(p) for p in response["PriceList"]]
+
+if __name__ == "__main__":
+    pricing_client = boto3.client("pricing", region_name="us-east-1")
+
+    # List all CloudFront attributes
+    attributes = get_cloudfront_attributes(pricing_client)
+    print("CloudFront possible attributes:")
+    for i, attr in enumerate(attributes):
+        print(f"{i + 1}: {attr}")
+
+    attr_choice = int(input("Select an attribute (number): ")) - 1
+    attr_name = attributes[attr_choice]
+
+    # Get possible values for selected attribute
+    values = get_attribute_values(pricing_client, attr_name)
+    print(f"Possible values for '{attr_name}':")
+    for i, val in enumerate(values):
+        print(f"{i + 1}: {val}")
+
+    value_choice = int(input("Select a value (number): ")) - 1
+    selected_value = values[value_choice]
+
+    # Optional: Add region or additional required filters
+    filters = []  # Add additional filters if needed for precision
+
+    results = get_pricing(pricing_client, attr_name, selected_value, filters)
+    print(f"Pricing results for '{attr_name}' = '{selected_value}':")
+    for res in results:
+        print(json.dumps(res, indent=2))
