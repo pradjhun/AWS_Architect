@@ -309,6 +309,115 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AWS Pricing API endpoints
+  app.get('/api/pricing/services', async (req, res) => {
+    try {
+      const { spawn } = await import('child_process');
+      const python = spawn('python3', ['server/services/awsPricingAPI.py', 'get_services']);
+      
+      let data = '';
+      python.stdout.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      python.stderr.on('data', (chunk) => {
+        console.error('Python error:', chunk.toString());
+      });
+      
+      python.on('close', (code) => {
+        try {
+          const result = JSON.parse(data);
+          res.json(result);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to parse pricing data' });
+        }
+      });
+    } catch (error) {
+      console.error('Error getting services:', error);
+      res.status(500).json({ error: 'Failed to get services' });
+    }
+  });
+
+  app.get('/api/pricing/services/:serviceCode/attributes', async (req, res) => {
+    try {
+      const { serviceCode } = req.params;
+      const { spawn } = await import('child_process');
+      const python = spawn('python3', ['server/services/awsPricingAPI.py', 'get_service_attributes', serviceCode]);
+      
+      let data = '';
+      python.stdout.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      python.on('close', (code) => {
+        try {
+          const result = JSON.parse(data);
+          res.json(result);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to parse attributes data' });
+        }
+      });
+    } catch (error) {
+      console.error('Error getting attributes:', error);
+      res.status(500).json({ error: 'Failed to get attributes' });
+    }
+  });
+
+  app.get('/api/pricing/services/:serviceCode/attributes/:attributeName/values', async (req, res) => {
+    try {
+      const { serviceCode, attributeName } = req.params;
+      const { spawn } = await import('child_process');
+      const python = spawn('python3', ['server/services/awsPricingAPI.py', 'get_attribute_values', serviceCode, attributeName]);
+      
+      let data = '';
+      python.stdout.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      python.on('close', (code) => {
+        try {
+          const result = JSON.parse(data);
+          res.json(result);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to parse attribute values data' });
+        }
+      });
+    } catch (error) {
+      console.error('Error getting attribute values:', error);
+      res.status(500).json({ error: 'Failed to get attribute values' });
+    }
+  });
+
+  app.post('/api/pricing/products', async (req, res) => {
+    try {
+      const { serviceCode, field, value } = req.body;
+      
+      if (!serviceCode || !field || !value) {
+        return res.status(400).json({ error: 'serviceCode, field, and value are required' });
+      }
+
+      const { spawn } = await import('child_process');
+      const python = spawn('python3', ['server/services/awsPricingAPI.py', 'get_products', serviceCode, field, value]);
+      
+      let data = '';
+      python.stdout.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      python.on('close', (code) => {
+        try {
+          const result = JSON.parse(data);
+          res.json(result);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to parse products data' });
+        }
+      });
+    } catch (error) {
+      console.error('Error getting products:', error);
+      res.status(500).json({ error: 'Failed to get products' });
+    }
+  });
+
   // Cost recalculation endpoint for sizing adjustments
   app.post('/api/recalculate-costs', async (req, res) => {
     try {

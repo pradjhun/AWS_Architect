@@ -7,6 +7,7 @@ import UploadSection from "@/components/UploadSection";
 import ConfigurationPanel from "@/components/ConfigurationPanel";
 import DocumentGeneration from "@/components/DocumentGeneration";
 import DeploymentStatus from "@/components/DeploymentStatus";
+import PricingExplorer from "@/components/PricingExplorer";
 
 export default function Dashboard() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -87,6 +88,11 @@ export default function Dashboard() {
             <DeploymentStatus deploymentData={deploymentData} />
           </div>
         )}
+
+        {/* AWS Pricing Explorer */}
+        <div className="mt-8">
+          <PricingExplorer />
+        </div>
       </main>
     </div>
   );
